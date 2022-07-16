@@ -1,0 +1,27 @@
+header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	height: 70px;
+	background: rgba(255, 255, 255, 0.973);
+	border-bottom: 1px solid rgb(148, 163, 184, 0.3);
+}
+
+header > .logo {
+	margin-left: 20px;
+	font-weight: 600;
+	font-size: 26px;
+	line-height: 10px;
+}
+
+header > ul {
+	display: flex;
+	margin-right: 20px;
+	list-style: none;
+	font-size: 20px;
+}
+
+header >ul > li {
+	padding: 20px;
+}

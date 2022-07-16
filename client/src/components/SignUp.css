@@ -1,0 +1,11 @@
+.SignUp {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: white;
+	width: 400px;
+	padding: 25px;
+	box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
+	border-radius: 5px;
+	margin-top: 40px;
+}
