@@ -1,12 +1,13 @@
+require('dotenv').config({path: './config.env'});
 const express = require('express');
 const cors = require('cors')
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
 const User = require('./models/user.model');
 
-const URI = `mongodb+srv://mubashir:mubashir@cluster0.8zzfp.mongodb.net/pait-pooja?retryWrites=true&w=majority`
-
-mongoose.connect(URI)
+mongoose.connect(process.env.MONGO_URI)
   .then((result) => console.log("Connected to database."))
   .catch((err) => console.log(err));
 
@@ -14,51 +15,63 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const errorFormatter = (error) => {
-  
-  if (error.code === 11000) {
-    if (Object.keys(error.keyValue)[0] === 'mobileNumber')  {
-      return "An account with the mobile number already exists"
-    } else if (Object.keys(error.keyValue)[0] === 'email') {
-      return "An account with the email already exists"
-    }
-  }
-  
-  let errorsArray = error.message.substring(error.message.indexOf(":")+1).trim()
-  errorsArray = errorsArray.split(',').map(err => err.trim())
-  const [, value] = errorsArray[0].split(':').map(err => err.trim())
-  return value
+const generateToken = (id, email) => {
+  return jwt.sign({id, email}, process.env.JWT_SECRET,{
+    expiresIn: '3d'
+  })
 }
 
 app.post("/api/register", async (req, res) => {
-  const newUser = new User({
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password,
-    mobileNumber: req.body.mobileNumber
-  })
-
+  const {name, email, mobileNumber, password, passwordConfirm} = req.body
   try {
-    await newUser.save();
-    res.json({result: true});
-    console.log("User: Record saved.");
-  } catch (err) {
-    console.log("User: Error saving record.");
-    res.json({result: false, error: errorFormatter(err)})
+    let existingUser = await User.findOne({email})
+    
+    if (existingUser) {
+      return res.status(400).json({message: "An account with the email already exists"});
+    }
+    
+    existingUser = await User.findOne({mobileNumber})
+    if (existingUser) {
+      return res.status(400).json({message: "An account with the mobile number already exists"});
+    }
+
+    if (password !== passwordConfirm) {
+      return res.status(400).json({message: "Passwords don't match"});
+    }
+    
+    const newUser = await User.create({name, email, password, mobileNumber});
+    return res.status(200).json({user: newUser, token: generateToken(newUser._id, newUser.email)
+    })
+  } catch (error) {
+    res.status(500).json({message: "Something went wrong.."});
   }
 });
 
 app.post("/api/login", async(req, res) => {
-  const user = await User.findOne({
-    email: req.body.email
-  })
-
-  if (user) {
-    const auth = await bcrypt.compare(req.body.password, user.password)
-    return res.json({user: auth})
-  } 
-  return res.json({user: false})
+  try {
+    const existingUser = await User.findOne({
+      email: req.body.email
+    })
+  
+    if (!existingUser) {
+      return res.status(404).json({message: "User doesn't exist"});
+    }
+  
+    if (await bcrypt.compare(req.body.password, existingUser.password)) {
+      return res.status(200).json({
+        user: existingUser, 
+        token: generateToken(existingUser._id, existingUser.email)
+      })
+    } 
+    return res.status(400).json({message: "Invalid credentials"});
+  } catch (error) {
+    res.status(500).json({message: "Something went wrong.."});
+  }
 })
 
+const server = app.listen(3001, () => console.log("Server: listening at http://localhost:3001"))
 
-app.listen(3001, () => console.log("Server: listening at http://localhost:3001"))
+process.on("unhandledRejection", (error, promise) => {
+  console.log(`Logged error: ${error}`)
+  server.close(() => process.exit(1))
+})

@@ -17,11 +17,23 @@ header > .logo {
 
 header > ul {
 	display: flex;
+	align-items: flex-end;
 	margin-right: 20px;
 	list-style: none;
 	font-size: 20px;
 }
 
-header >ul > li {
+header > ul > li {
 	padding: 20px;
+}
+
+header > ul > li > button {
+	color: white;
+	font-weight: 600;
+  height: 36px;
+  width: 80px;
+	background-color: #00886B;
+	border-radius: 5px;
+  border: none;
+	cursor: pointer;
 }

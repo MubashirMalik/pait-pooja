@@ -1,16 +1,21 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 
 import './Login.css';
 
-export default function Login() {
+export default function Login(props) {
 	const navigate = useNavigate();
 	const [formData, setFormData] = useState({
   	email: "",
     password: "",
   });
-
 	const [error, setError] = useState("");
+
+	useEffect(() => {
+		if(localStorage.getItem('authToken')) {
+			navigate('/')
+		}
+	})
 
 	function handleChange(event) {
 		setFormData(prevFormData => {
@@ -31,12 +36,27 @@ export default function Login() {
 		})
 
 		const resData = await res.json()
-		!resData.user ? setError("No user with the email and password exists") : navigate('/') 
+		if (!resData.user) {
+			setError(resData.message);
+		} else {
+			localStorage.setItem('authToken', resData.token)
+			props.setIsLoggedIn(true)
+			navigate('/');
+		} 
 	}
 
 	async function handleSubmit(event) {
     event.preventDefault();
-		loginUser()
+
+		let _error = "";
+		if (formData.email === "" || formData.password < 8) {
+			_error = "Please provide a valid email and password"
+		}
+
+		setError(_error)
+		if (_error === "") {
+			await loginUser()
+		}
   }
 
 	return (

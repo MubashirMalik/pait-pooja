@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
     required: [true, "Mobile Number is required"], 
     unique: true
   },
-})
+}, { timestamps: true })
 
 userSchema.pre('save', async function(next) {
   const salt = await bcrypt.genSalt();

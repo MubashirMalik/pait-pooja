@@ -1,3 +1,4 @@
+import {useState} from 'react'
 import Navbar from './components/Navbar';
 import CardList from './components/CardList';
 import Login from './components/Login';
@@ -11,14 +12,16 @@ import {
 import './App.css';
 
 export default function App(){
+	const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("authToken"))
+
 	return (
 		<div className="App">
-			<Navbar />
+			<Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
 			<div className="App-body">
 				<Routes>
 					<Route exact path="/" element={<CardList />} />
-					<Route exact path="/login" element={ <Login /> } />
-					<Route exact path="/sign-up" element={ <SignUp /> } />
+					<Route exact path="/login" element={ <Login setIsLoggedIn={setIsLoggedIn} /> } />
+					<Route exact path="/sign-up" element={ <SignUp setIsLoggedIn={setIsLoggedIn} />} />
 					<Route path="*" element={ <PageNotFound />}/>
 				</Routes>
 			</div>

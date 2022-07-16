@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import './SignUp.css';
 
-export default function SignUp() {
+export default function SignUp(props) {
 	const navigate = useNavigate();
 	const [formData, setFormData] = useState({
 		name: "",
@@ -13,6 +13,12 @@ export default function SignUp() {
 	});
 	const [error, setError] = useState("")
 
+	useEffect(() => {
+		if(localStorage.getItem('authToken')) {
+			navigate('/')
+		}
+	})
+
 	function handleChange(event) {
 		setFormData(prevFormData => {
 			return {
@@ -21,7 +27,7 @@ export default function SignUp() {
 			}
 		});
 	}
-
+	
 	async function registerUser() {
 		const res = await fetch('http://localhost:3001/api/register',{
 			method: 'POST',
@@ -32,7 +38,13 @@ export default function SignUp() {
 		})
 
 		const resData = await res.json()
-		!resData.result ? setError(resData.error) : navigate('/') 
+		if (!resData.user) {
+			setError(resData.message);
+		} else {
+			localStorage.setItem('authToken', resData.token)
+			props.setIsLoggedIn(true)
+			navigate('/');
+		} 
 	}
 
 	async function handleSubmit(event) {
