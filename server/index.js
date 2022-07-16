@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors')
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const User = require('./models/user.model');
 
 const URI = `mongodb+srv://mubashir:mubashir@cluster0.8zzfp.mongodb.net/pait-pooja?retryWrites=true&w=majority`
@@ -30,11 +31,6 @@ const errorFormatter = (error) => {
 }
 
 app.post("/api/register", async (req, res) => {
-
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
-
   const newUser = new User({
     name: req.body.name,
     email: req.body.email,
@@ -51,5 +47,18 @@ app.post("/api/register", async (req, res) => {
     res.json({result: false, error: errorFormatter(err)})
   }
 });
+
+app.post("/api/login", async(req, res) => {
+  const user = await User.findOne({
+    email: req.body.email
+  })
+
+  if (user) {
+    const auth = await bcrypt.compare(req.body.password, user.password)
+    return res.json({user: auth})
+  } 
+  return res.json({user: false})
+})
+
 
 app.listen(3001, () => console.log("Server: listening at http://localhost:3001"))

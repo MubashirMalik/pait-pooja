@@ -1,29 +1,43 @@
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 import './Login.css';
 
 export default function Login() {
-
+	const navigate = useNavigate();
 	const [formData, setFormData] = useState({
-    	email: "",
-    	password: "",
-    	error: ""
-  	});
+  	email: "",
+    password: "",
+  });
 
-  	function handleChange(event) {
+	const [error, setError] = useState("");
+
+	function handleChange(event) {
 		setFormData(prevFormData => {
 			return {
 				...prevFormData, 
 				[event.target.name]: event.target.value
 			}
 		})
-	
 	}
   	
-	function handleSubmit(evt) {
-    	evt.preventDefault();
-  	}
+	async function loginUser() {
+		const res = await fetch('http://localhost:3001/api/login',{
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({...formData})
+		})
+
+		const resData = await res.json()
+		!resData.user ? setError("No user with the email and password exists") : navigate('/') 
+	}
+
+	async function handleSubmit(event) {
+    event.preventDefault();
+		loginUser()
+  }
 
 	return (
 		<div className='Login'>
@@ -34,7 +48,7 @@ export default function Login() {
 				</svg>
 			</div>
 			<form>
-				<div className="form-error">{formData.error}</div>
+				<div className="form-error">{error}</div>
 				<input
 					type="email"
 					name="email"

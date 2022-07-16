@@ -55,7 +55,7 @@ export default function SignUp() {
 
 		setError(_error)
 		if (_error === "") {
-			registerUser()
+			await registerUser()
 		}
 	}
 
