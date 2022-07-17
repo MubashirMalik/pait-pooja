@@ -17,14 +17,12 @@ export default function App(){
 	return (
 		<div className="App">
 			<Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
-			<div className="App-body">
-				<Routes>
-					<Route exact path="/" element={<CardList />} />
-					<Route exact path="/login" element={ <Login setIsLoggedIn={setIsLoggedIn} /> } />
-					<Route exact path="/sign-up" element={ <SignUp setIsLoggedIn={setIsLoggedIn} />} />
-					<Route path="*" element={ <PageNotFound />}/>
-				</Routes>
-			</div>
+			<Routes>
+				<Route exact path="/" element={<CardList />} />
+				<Route path="*" element={ <PageNotFound />}/>
+				<Route exact path="/login" element={ <Login setIsLoggedIn={setIsLoggedIn} /> } />
+				<Route exact path="/sign-up" element={ <SignUp setIsLoggedIn={setIsLoggedIn} />} />
+			</Routes>
 		</div>
   	);
 }

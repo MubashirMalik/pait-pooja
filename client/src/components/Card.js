@@ -1,6 +1,6 @@
 import './Card.css';
 
-export default function Card(props) {
+export default function Card({item}) {
   return (
     <div className="Card">
       <div className="Card-inner">
@@ -9,11 +9,11 @@ export default function Card(props) {
         </div>
         <div className="Card-inner-right">
           <div>
-            <div className="title">Musalli Cheese</div>
-            <div className="desc">Talli cheese lroeum isumafjsdbgkjhjsdf</div>
+            <div className="title">{item.name}</div>
+            <div className="desc">This will be the item description.</div>
           </div>
           <div>
-            <div className="price">Rs. 100</div>
+            <div className="price">Rs. {item.price}</div>
             <button>Add to Cart</button>
           </div>
         </div>  

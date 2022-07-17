@@ -72,58 +72,60 @@ export default function SignUp(props) {
 	}
 
 	return (
-		<div className='SignUp'>
-			<div>
-				<h1>Register</h1>
-				<svg className="cl-ao cl_af" viewBox="0 0 223 17" fill="none">
-					<path opacity="0.5" d="M2 11.3686C17.6603 8.02778 33.9464 6.93097 49.9106 6.13771C76.6733 4.80789 103.638 4.48984 130.396 6.01883C154.367 7.38859 178.015 10.6844 201.964 7.92099C208.097 7.21339 216.371 7.08879 222.413 7.08879" stroke="#E7A4D0" strokeWidth="10" strokeLinejoin="round"></path>
-				</svg>
-			</div>
-			<form onSubmit={handleSubmit}>
-				<div className="form-error">{error}</div>
-				<input
-					type="text"
-					name="name"
-					value={formData.name}
-					onChange={handleChange}
-					autoComplete="true"
-					placeholder="Name"
-				/>
-				<input
-					type="email"
-					name="email"
-					value={formData.email}
-					onChange={handleChange}
-					autoComplete="true"
-					placeholder="Email Address"
-				/>
-				<input
-					type="tel"
-					name='mobileNumber'
-					value={formData.mobileNumber}
-					onChange={handleChange}
-					placeholder='Mobile Number'
-				/>
-				<input
-					type="password"
-					name="password"
-					value={formData.password}
-					onChange={handleChange}
-					autoComplete="true"
-					placeholder="Password"
-				/>
-				<input
-					type="password"
-					name="passwordConfirm"
-					value={formData.passwordConfirm}
-					onChange={handleChange}
-					autoComplete="true"
-					placeholder="Confirm Password"
-				/>
-				<button>Sign up</button>
-			</form>
-			<div className="footer">Have an account?{" "}
-			<Link to="/login">Log In</Link>
+		<div className="App-body">
+			<div className='SignUp'>
+				<div>
+					<h1>Register</h1>
+					<svg className="cl-ao cl_af" viewBox="0 0 223 17" fill="none">
+						<path opacity="0.5" d="M2 11.3686C17.6603 8.02778 33.9464 6.93097 49.9106 6.13771C76.6733 4.80789 103.638 4.48984 130.396 6.01883C154.367 7.38859 178.015 10.6844 201.964 7.92099C208.097 7.21339 216.371 7.08879 222.413 7.08879" stroke="#E7A4D0" strokeWidth="10" strokeLinejoin="round"></path>
+					</svg>
+				</div>
+				<form onSubmit={handleSubmit}>
+					<div className="form-error">{error}</div>
+					<input
+						type="text"
+						name="name"
+						value={formData.name}
+						onChange={handleChange}
+						autoComplete="true"
+						placeholder="Name"
+					/>
+					<input
+						type="email"
+						name="email"
+						value={formData.email}
+						onChange={handleChange}
+						autoComplete="true"
+						placeholder="Email Address"
+					/>
+					<input
+						type="tel"
+						name='mobileNumber'
+						value={formData.mobileNumber}
+						onChange={handleChange}
+						placeholder='Mobile Number'
+					/>
+					<input
+						type="password"
+						name="password"
+						value={formData.password}
+						onChange={handleChange}
+						autoComplete="true"
+						placeholder="Password"
+					/>
+					<input
+						type="password"
+						name="passwordConfirm"
+						value={formData.passwordConfirm}
+						onChange={handleChange}
+						autoComplete="true"
+						placeholder="Confirm Password"
+					/>
+					<button>Sign up</button>
+				</form>
+				<div className="footer">Have an account?{" "}
+				<Link to="/login">Log In</Link>
+				</div>
 			</div>
 		</div>
 	);

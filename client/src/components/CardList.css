@@ -1,0 +1,6 @@
+.CardList {
+  display: flex;
+  margin: 20px;
+  overflow-x: auto;
+  flex-wrap: nowrap;
+}
