@@ -60,7 +60,7 @@ export default function Login(props) {
   }
 
 	return (
-		<div className="App-body">
+		<div className="Form-container">
 			<div className='Login'>
 				<div>
 					<h1>Login</h1>

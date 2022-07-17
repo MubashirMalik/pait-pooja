@@ -72,7 +72,7 @@ export default function SignUp(props) {
 	}
 
 	return (
-		<div className="App-body">
+		<div className="Form-container">
 			<div className='SignUp'>
 				<div>
 					<h1>Register</h1>

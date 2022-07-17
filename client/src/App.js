@@ -1,5 +1,6 @@
 import {useState} from 'react'
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import CardLists from './components/CardList';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
@@ -17,12 +18,15 @@ export default function App(){
 	return (
 		<div className="App">
 			<Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
-			<Routes>
-				<Route exact path="/" element={<CardLists />} />
-				<Route path="*" element={ <PageNotFound />}/>
-				<Route exact path="/login" element={ <Login setIsLoggedIn={setIsLoggedIn} /> } />
-				<Route exact path="/sign-up" element={ <SignUp setIsLoggedIn={setIsLoggedIn} />} />
-			</Routes>
+			<div className="App-body">
+				<Routes>
+					<Route exact path="/" element={<CardLists />} />
+					<Route path="*" element={ <PageNotFound />}/>
+					<Route exact path="/login" element={ <Login setIsLoggedIn={setIsLoggedIn} /> } />
+					<Route exact path="/sign-up" element={ <SignUp setIsLoggedIn={setIsLoggedIn} />} />
+				</Routes>
+			</div>
+			<Footer />
 		</div>
   	);
 }
