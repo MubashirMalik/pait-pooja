@@ -1,6 +1,7 @@
 import './Card.css';
 
-export default function Card({item}) {
+export default function Card({item, setCart}) {
+
   return (
     <div className="Card">
       <div className="Card-inner">
@@ -14,7 +15,7 @@ export default function Card({item}) {
           </div>
           <div>
             <div className="price">Rs. {item.price}</div>
-            <button>Add to Cart</button>
+            <button onClick={() => setCart(prevCart => prevCart.indexOf(item) === -1 ? [...prevCart, item] : prevCart)}>Add to Cart</button>
           </div>
         </div>  
       </div>  

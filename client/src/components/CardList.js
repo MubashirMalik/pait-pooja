@@ -3,8 +3,8 @@ import Card from "./Card";
 
 import './CardList.css'
 
-function CardList({items}) {
-  const itemsCard = items.map((item) => <Card key={item._id} item={item} />)
+function CardList({items, setCart}) {
+  const itemsCard = items.map((item) => <Card key={item._id} item={item} setCart={setCart}/>)
   
   return (
     <div className="CardList">
@@ -16,7 +16,7 @@ function CardList({items}) {
   )
 }
 
-export default function CardLists() {
+export default function CardLists({setCart}) {
   const [allItems, setAllItems] = useState([]);
 
   useEffect(() => {
@@ -37,9 +37,8 @@ export default function CardLists() {
     getItems()
   }, [])
 
-
   const itemsCardList = allItems.map(
-    (items) => <CardList key={items[0]._id} items={items}/>
+    (items) => <CardList key={items[0]._id} items={items} setCart={setCart} />
   ) 
 
   return(

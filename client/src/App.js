@@ -14,13 +14,15 @@ import './App.css';
 
 export default function App(){
 	const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("authToken"))
+	const [cart, setCart] = useState([])
 
+	console.log(cart)
 	return (
 		<div className="App">
-			<Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
+			<Navbar numItems={cart.length} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
 			<div className="App-body">
 				<Routes>
-					<Route exact path="/" element={<CardLists />} />
+					<Route exact path="/" element={<CardLists setCart={setCart}/>} />
 					<Route path="*" element={ <PageNotFound />}/>
 					<Route exact path="/login" element={ <Login setIsLoggedIn={setIsLoggedIn} /> } />
 					<Route exact path="/sign-up" element={ <SignUp setIsLoggedIn={setIsLoggedIn} />} />
