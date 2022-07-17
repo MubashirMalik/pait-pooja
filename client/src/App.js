@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import Navbar from './components/Navbar';
-import CardList from './components/CardList';
+import CardLists from './components/CardList';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 
@@ -18,7 +18,7 @@ export default function App(){
 		<div className="App">
 			<Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
 			<Routes>
-				<Route exact path="/" element={<CardList />} />
+				<Route exact path="/" element={<CardLists />} />
 				<Route path="*" element={ <PageNotFound />}/>
 				<Route exact path="/login" element={ <Login setIsLoggedIn={setIsLoggedIn} /> } />
 				<Route exact path="/sign-up" element={ <SignUp setIsLoggedIn={setIsLoggedIn} />} />

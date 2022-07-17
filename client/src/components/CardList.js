@@ -3,21 +3,48 @@ import Card from "./Card";
 
 import './CardList.css'
 
-export default function CardList() {
-  const [items, setItems] = useState([]); 
+function CardList({items}) {
+  const itemsCard = items.map((item) => <Card key={item._id} item={item} />)
+  
+  return (
+    <div className="CardList">
+      <div className="CardList-heading">
+        {items[0] ? items[0].category : "Category"}
+      </div>
+      <div className="CardList-body">{itemsCard}</div>
+    </div>
+  )
+}
+
+export default function CardLists() {
+  const [allItems, setAllItems] = useState([]);
 
   useEffect(() => {
     async function getItems() {
       const res = await fetch("http://localhost:3001/api/item/get")
       const resData = await res.json()
-      resData.message ? console.log(resData.message) : setItems(resData.items)
+      
+      if (resData.message) {
+        console.log(resData.message)
+      } else {
+        const grouped = Object.values(resData.items.reduce((acc, item) => {
+          acc[item.category] = [...(acc[item.category] || []), item];
+          return acc;
+        }, {}))
+        setAllItems(grouped)
+      } 
     }
     getItems()
   }, [])
 
-  const itemsCard = items.map((item) => <Card key={item._id} item={item} />)
-  
-  return (
-    <div className="CardList">{itemsCard}</div>
+
+  const itemsCardList = allItems.map(
+    (items) => <CardList key={items[0]._id} items={items}/>
+  ) 
+
+  return(
+    <div>
+      { itemsCardList }
+    </div>
   )
 }

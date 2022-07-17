@@ -1,6 +1,17 @@
 .CardList {
+  margin: 30px;
+}
+
+.CardList-heading {
   display: flex;
-  margin: 20px;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 30px;
+}
+
+.CardList-body {
+  display: flex;
   overflow-x: auto;
   flex-wrap: nowrap;
 }
+

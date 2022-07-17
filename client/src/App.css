@@ -1,6 +1,6 @@
 .App {
-	height: 100vh;
 	background-color: rgba(198, 190, 238, 0.502);
+	padding-bottom: 20px;
 }
 
 .App-body {
