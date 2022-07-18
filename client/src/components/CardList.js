@@ -17,7 +17,9 @@ function CardList({items, setCart}) {
 }
 
 export default function CardLists({setCart}) {
-  const [allItems, setAllItems] = useState([]);
+  const [allItems, setAllItems] = useState(
+    () => JSON.parse(localStorage.getItem("items")) || []
+  );
 
   useEffect(() => {
     async function getItems() {
@@ -36,9 +38,15 @@ export default function CardLists({setCart}) {
           return acc;
         }, {}))
         setAllItems(grouped)
+        localStorage.setItem("items", JSON.stringify(grouped))
       } 
     }
-    getItems()
+
+    // Only fetch items from database, if user is visiting for the first time
+    if (!localStorage.getItem("items")) {
+      console.log("Items loaded from the database")
+      getItems()
+    }
   }, [])
 
   const itemsCardList = allItems.map(
