@@ -1,9 +1,10 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import CardLists from './components/CardList';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
+import Checkout from './components/CheckOut';
 
 import {
 	Route,
@@ -15,14 +16,25 @@ import './App.css';
 export default function App(){
 	const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("authToken"))
 	const [cart, setCart] = useState([])
+	const [grandTotal, setGrandTotal] = useState(0)
 
-	console.log(cart)
+	useEffect(() => {
+		function getGrandTotal(total, item) {
+			return total + item.price * item.quantity
+		}
+		setGrandTotal(() => {
+			return cart.reduce(getGrandTotal, 0)
+		})
+	}, [cart])
+
+	console.log("App rendered")
 	return (
 		<div className="App">
 			<Navbar numItems={cart.length} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
 			<div className="App-body">
 				<Routes>
 					<Route exact path="/" element={<CardLists setCart={setCart}/>} />
+					<Route exact path="/checkout" element={<Checkout cart={cart} setCart={setCart} grandTotal={grandTotal} />} />
 					<Route path="*" element={ <PageNotFound />}/>
 					<Route exact path="/login" element={ <Login setIsLoggedIn={setIsLoggedIn} /> } />
 					<Route exact path="/sign-up" element={ <SignUp setIsLoggedIn={setIsLoggedIn} />} />
@@ -32,7 +44,6 @@ export default function App(){
 		</div>
   	);
 }
-
 
 function PageNotFound() {
 	return(

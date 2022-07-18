@@ -19,7 +19,7 @@ export default function Navbar(props) {
 					<li><Link to="/sign-up">Create Account</Link></li>
 					<li><Link to="/login">Log In</Link></li>
 					<li className="cart"><ShoppingCartCheckoutIcon /> [{props.numItems}] 
-						<Link to="/">Checkout</Link>
+						<Link to="/checkout">Checkout</Link>
 					</li>
 				</ul> 
 				:
@@ -27,7 +27,7 @@ export default function Navbar(props) {
 					<li><Link to="/">Welcome Mubashir!</Link></li>
 					<li><button onClick={logout}>Logout</button></li>
 					<li className="cart"><ShoppingCartCheckoutIcon /> [{props.numItems}] 
-						<Link to="/">Checkout</Link>
+						<Link to="/checkout">Checkout</Link>
 					</li>
 				</ul>
 			}

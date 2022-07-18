@@ -27,6 +27,10 @@ export default function CardLists({setCart}) {
       if (resData.message) {
         console.log(resData.message)
       } else {
+        resData.items = resData.items.map((item) => {
+          item.quantity = 0;
+          return item;
+        })
         const grouped = Object.values(resData.items.reduce((acc, item) => {
           acc[item.category] = [...(acc[item.category] || []), item];
           return acc;

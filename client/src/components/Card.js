@@ -2,6 +2,22 @@ import './Card.css';
 
 export default function Card({item, setCart}) {
 
+  function addToCart() {
+    setCart((prevCart) => {
+     let existingItemIndex = prevCart.findIndex(i => i._id === item._id);
+     if (existingItemIndex !== -1) {
+      // Save existing item
+      let existingItem = prevCart.find(i => i._id === item._id);
+      // Filter prevCart, without the existing item
+      let newCart = prevCart.filter(i => i._id !== item._id);
+      // Return new Array with updated existing item
+      return [...newCart, {...existingItem, quantity: existingItem.quantity + 1}]
+     } else {
+      return [...prevCart, {...item, quantity: 1}]
+     } 
+    })
+  }
+
   return (
     <div className="Card">
       <div className="Card-inner">
@@ -15,7 +31,7 @@ export default function Card({item, setCart}) {
           </div>
           <div>
             <div className="price">Rs. {item.price}</div>
-            <button onClick={() => setCart(prevCart => prevCart.indexOf(item) === -1 ? [...prevCart, item] : prevCart)}>Add to Cart</button>
+            <button onClick={addToCart}>Add to Cart</button>
           </div>
         </div>  
       </div>  

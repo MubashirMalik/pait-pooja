@@ -31,6 +31,10 @@ form > input {
 	border: 1px solid rgb(148, 163, 184);
 }
 
+form > textarea {
+	margin-bottom: 10px;
+}
+
 input:focus {
 	outline: none;
 }
