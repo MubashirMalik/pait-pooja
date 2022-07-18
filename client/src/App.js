@@ -15,7 +15,7 @@ import './App.css';
 
 export default function App(){
 	const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("authToken"))
-	const [cart, setCart] = useState([])
+	const [cart, setCart] = useState(() => JSON.parse(localStorage.getItem("cart")) || [] )
 	const [grandTotal, setGrandTotal] = useState(0)
 
 	useEffect(() => {
@@ -25,6 +25,7 @@ export default function App(){
 		setGrandTotal(() => {
 			return cart.reduce(getGrandTotal, 0)
 		})
+		localStorage.setItem("cart", JSON.stringify(cart))
 	}, [cart])
 
 	console.log("App rendered")
@@ -34,7 +35,7 @@ export default function App(){
 			<div className="App-body">
 				<Routes>
 					<Route exact path="/" element={<CardLists setCart={setCart}/>} />
-					<Route exact path="/checkout" element={<Checkout cart={cart} setCart={setCart} grandTotal={grandTotal} />} />
+					<Route exact path="/checkout" element={<Checkout cart={cart} setCart={setCart} isLoggedIn={isLoggedIn} grandTotal={grandTotal} />} />
 					<Route path="*" element={ <PageNotFound />}/>
 					<Route exact path="/login" element={ <Login setIsLoggedIn={setIsLoggedIn} /> } />
 					<Route exact path="/sign-up" element={ <SignUp setIsLoggedIn={setIsLoggedIn} />} />

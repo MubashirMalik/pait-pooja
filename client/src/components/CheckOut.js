@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import './CheckOut.css'
 
-export default function Checkout({cart, setCart, grandTotal}) {
+export default function Checkout({cart, setCart, isLoggedIn, grandTotal}) {
   const [formData, setFormData] = useState({
     specialInstructions: ""
   })
@@ -48,7 +48,17 @@ export default function Checkout({cart, setCart, grandTotal}) {
   function placeOrder(event) {
     event.preventDefault()
     if (cart.length === 0) {
-      toast.error('Your cart is empty!', {
+      toast.error('😔 Your cart is empty!', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else if (!isLoggedIn) {
+      toast.warning('🦄 Log in to place the order!', {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
