@@ -2,6 +2,8 @@ import { useState } from "react"
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import './CheckOut.css'
 
 export default function Checkout({cart, setCart, grandTotal}) {
@@ -45,7 +47,27 @@ export default function Checkout({cart, setCart, grandTotal}) {
 
   function placeOrder(event) {
     event.preventDefault()
-    cart.length === 0 ? console.log("There are no items in ur cart") : console.log("Order placed!")
+    if (cart.length === 0) {
+      toast.error('Your cart is empty!', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else {
+      toast.success('🤤 Order Placed!', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } 
   }
 
   const displayCart = cart.map((item) => 
@@ -108,6 +130,7 @@ export default function Checkout({cart, setCart, grandTotal}) {
           <button onClick={placeOrder}>Checkout</button>
         </form>
       </div>
+      <ToastContainer />
     </div>
   )
 }

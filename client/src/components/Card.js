@@ -1,6 +1,7 @@
-import './Card.css';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import './Card.css';
+
 export default function Card({item, setCart}) {
 
   function addToCart() {
@@ -46,17 +47,7 @@ export default function Card({item, setCart}) {
           </div>
         </div>  
       </div>
-      <ToastContainer
-position="top-center"
-autoClose={5000}
-hideProgressBar={false}
-newestOnTop={false}
-closeOnClick
-rtl={false}
-pauseOnFocusLoss
-draggable
-pauseOnHover
-/>  
+      <ToastContainer />  
     </div>
   );
 }
