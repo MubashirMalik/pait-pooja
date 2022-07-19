@@ -1,8 +1,16 @@
+import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import './Card.css';
 
 export default function Card({item, setCart}) {
+  const [imageURL, setImageURL] = useState("")
+    
+  useEffect(() => {
+    import(`../assets/images/${item._id}.jpg`).then((module) => {
+      setImageURL(module.default);
+    });
+  })
 
   function addToCart() {
     setCart((prevCart) => {
@@ -34,7 +42,7 @@ export default function Card({item, setCart}) {
     <div className="Card">
       <div className="Card-inner">
         <div className="Card-inner-left">
-          <img src="https://img.freepik.com/premium-photo/big-hamburger-with-double-beef-french-fries_252907-8.jpg?w=2000" alt="ham"/>
+          <img src={imageURL} alt={item.name}/>
         </div>
         <div className="Card-inner-right">
           <div>
