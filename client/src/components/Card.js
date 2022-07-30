@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import './Card.css';
 
-export default function Card({item, setCart}) {
+function Card({item, setCart}) {
   const [imageURL, setImageURL] = useState("")
     
   useEffect(() => {
@@ -59,3 +59,5 @@ export default function Card({item, setCart}) {
     </div>
   );
 }
+
+export default memo(Card);

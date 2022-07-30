@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import Card from "./Card";
 
 import './CardList.css'
@@ -16,7 +16,7 @@ function CardList({items, setCart}) {
   )
 }
 
-export default function CardLists({setCart}) {
+function CardLists({setCart}) {
   const [allItems, setAllItems] = useState(
     () => JSON.parse(localStorage.getItem("items")) || []
   );
@@ -53,9 +53,12 @@ export default function CardLists({setCart}) {
     (items) => <CardList key={items[0]._id} items={items} setCart={setCart} />
   ) 
 
+  console.log("CardLists rendered!")
   return(
     <div>
       { itemsCardList }
     </div>
   )
 }
+
+export default memo(CardLists);

@@ -100,6 +100,7 @@ export default function Checkout({cart, setCart, isLoggedIn, grandTotal}) {
     </div>
   )
 
+  console.log("Checkout rendered!")
   return(
     <div className="Form-container">
       <div className="SignUp">

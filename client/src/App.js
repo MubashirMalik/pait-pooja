@@ -14,7 +14,7 @@ import {
 import './App.css';
 
 export default function App(){
-	const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("authToken"))
+	const [isLoggedIn, setIsLoggedIn] = useState(() => localStorage.getItem("authToken"))
 	const [cart, setCart] = useState(() => JSON.parse(localStorage.getItem("cart")) || [] )
 	const [grandTotal, setGrandTotal] = useState(0)
 
@@ -28,7 +28,7 @@ export default function App(){
 		localStorage.setItem("cart", JSON.stringify(cart))
 	}, [cart])
 
-	console.log("App rendered")
+	console.log("App rendered!")
 	return (
 		<div className="App">
 			<Navbar numItems={cart.length} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
